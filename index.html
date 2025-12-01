@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churrascometro do Mestre</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🔥 Churrascometro do Mestre</h1>
+        <p class="intro">Fala, meu consagrado! Preenche aí pra gente não deixar faltar carne na brasa.</p>
+
+        <div class="input-group">
+            <label for="homens">Quantos Homens?</label>
+            <input type="number" id="homens" placeholder="0" min="0">
+        </div>
+
+        <div class="input-group">
+            <label for="mulheres">Quantas Mulheres?</label>
+            <input type="number" id="mulheres" placeholder="0" min="0">
+        </div>
+
+        <div class="input-group">
+            <label for="criancas">Quantas Crianças?</label>
+            <input type="number" id="criancas" placeholder="0" min="0">
+        </div>
+
+        <div class="input-group">
+            <label for="bebedores">Quantos Adultos bebem Cerveja?</label>
+            <input type="number" id="bebedores" placeholder="0" min="0">
+        </div>
+
+        <div class="input-group">
+            <label for="duracao">Duração do Churras?</label>
+            <select id="duracao">
+                <option value="padrao">Padrão (até 4h)</option>
+                <option value="longo">Longo (o dia todo)</option>
+            </select>
+        </div>
+
+        <button onclick="calcularChurrasco()">Calcula aí, Patrão!</button>
+
+        <div id="resultado">
+            </div>
+
+        <div class="dica-mestre">
+            <h3>🌡️ Ponto da Carne (Dica do Mestre)</h3>
+            <ul>
+                <li><strong>Mal Passada (Rare):</strong> 50-53°C (Vermelhaça)</li>
+                <li><strong>Ao Ponto (Medium):</strong> 57-63°C (Rosadinha)</li>
+                <li><strong>Bem Passada (Well):</strong> 68°C+ (Sola de sapato... brincadeira!)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        /* --- LÓGICA (JAVASCRIPT) --- */
+        function calcularChurrasco() {
+            // 1. Pegar os valores dos inputs
+            let homens = document.getElementById('homens').value;
+            let mulheres = document.getElementById('mulheres').value;
+            let criancas = document.getElementById('criancas').value;
+            let bebedores = document.getElementById('bebedores').value;
+            let duracao = document.getElementById('duracao').value;
+
+            // Converter textos para números (para evitar erros de matemática)
+            homens = Number(homens);
+            mulheres = Number(mulheres);
+            criancas = Number(criancas);
+            bebedores = Number(bebedores);
+
+            // 2. Definir as regras baseadas na duração
+            // Regra Padrão (4h)
+            let carneHomem = 0.5; // 500g = 0.5kg
+            let carneMulher = 0.35; // 350g = 0.35kg
+            let carneCrianca = 0.2; // 200g = 0.2kg
+
+            // Se for Longo, aumentamos a carne dos adultos
+            if (duracao === "longo") {
+                carneHomem = 0.7; // 700g
+                carneMulher = 0.5; // 500g
+                // Criança mantém 200g segundo a regra
+            }
+
+            // 3. Calcular Totais
+            let totalCarne = (homens * carneHomem) + (mulheres * carneMulher) + (criancas * carneCrianca);
+            
+            // Cerveja: 1.5L por adulto que bebe
+            let totalCervejaLitros = bebedores * 1.5;
+            let totalLatas = Math.ceil(totalCervejaLitros / 0.350); // Convertendo para latas de 350ml (aproximado)
+
+            // Carvão: 1kg para cada 1kg de carne
+            let totalCarvao = totalCarne; 
+
+            // 4. Exibir o Resultado na tela
+            let divResultado = document.getElementById('resultado');
+            
+            divResultado.style.display = "block"; // Mostra a caixa
+            divResultado.innerHTML = `
+                <h2>📋 Lista do Patrão:</h2>
+                <p>🥩 <strong>Carne:</strong> ${totalCarne.toFixed(1)} kg <br><small>(Qualidade é tudo, hein!)</small></p>
+                <p>🍺 <strong>Cerveja:</strong> ${totalCervejaLitros.toFixed(1)} Litros <br><small>(Aprox. ${totalLatas} latas)</small></p>
+                <p>🔥 <strong>Carvão:</strong> ${totalCarvao.toFixed(1)} kg <br><small>(Melhor sobrar carvão do que faltar fogo!)</small></p>
+                <hr>
+                <p><em>"Paciência com o fogo, meu consagrado!"</em></p>
+            `;
+        }
+    </script>
+</body>
+</html>
