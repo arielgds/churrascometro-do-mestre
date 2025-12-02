@@ -10,51 +10,68 @@
 
     <div class="container">
         <h1>🔥 Churrascometro do Mestre</h1>
-        <p class="intro">Fala, meu consagrado! Preenche aí pra gente não deixar faltar carne na brasa.</p>
+        <p class="intro">Fala, meu consagrado! Calcula a carne e o rateio da galera aqui.</p>
 
         <div class="input-group">
-            <label for="homens">Quantos Homens?</label>
+            <label>Quantos Homens?</label>
             <input type="number" id="homens" placeholder="0" min="0">
         </div>
 
         <div class="input-group">
-            <label for="mulheres">Quantas Mulheres?</label>
+            <label>Quantas Mulheres?</label>
             <input type="number" id="mulheres" placeholder="0" min="0">
         </div>
 
         <div class="input-group">
-            <label for="criancas">Quantas Crianças?</label>
+            <label>Quantas Crianças?</label>
             <input type="number" id="criancas" placeholder="0" min="0">
         </div>
 
         <div class="input-group">
-            <label for="bebedores">Quantos Adultos bebem Cerveja?</label>
+            <label>Quantos Adultos bebem Cerveja?</label>
             <input type="number" id="bebedores" placeholder="0" min="0">
         </div>
 
         <div class="input-group">
-            <label for="duracao">Duração do Churras?</label>
+            <label>Duração do Churras?</label>
             <select id="duracao">
                 <option value="padrao">Padrão (até 4h)</option>
                 <option value="longo">Longo (o dia todo)</option>
             </select>
         </div>
 
-        <button onclick="calcularChurrasco()">Calcula aí, Patrão!</button>
+        <div class="input-group custo-group">
+            <h3>💸 Custos (Opcional)</h3>
+            <label>Total gasto em Comida (R$)</label>
+            <input type="number" id="preco-comida" placeholder="Ex: 200.00">
+            
+            <label style="margin-top: 10px;">Total gasto em Bebida (R$)</label>
+            <input type="number" id="preco-bebida" placeholder="Ex: 100.00">
+        </div>
 
-        <div id="resultado">
+        <button class="btn-calcular" onclick="calcularChurrasco()">Calcula aí, Patrão!</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <button class="chat-btn" onclick="toggleChat()">💬</button>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span>🤖 Bot do Mestre</span>
+            <span style="cursor:pointer;" onclick="toggleChat()">X</span>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="msg msg-bot">
+                Fala patrão! Digite <strong>"ponto"</strong> para temperaturas, <strong>"carvão"</strong> ou <strong>"ajuda"</strong>.
             </div>
-
-        <div class="dica-mestre">
-            <h3>🌡️ Ponto da Carne (Dica do Mestre)</h3>
-            <ul>
-                <li><strong>Mal Passada (Rare):</strong> 50-53°C (Vermelhaça)</li>
-                <li><strong>Ao Ponto (Medium):</strong> 57-63°C (Rosadinha)</li>
-                <li><strong>Bem Passada (Well):</strong> 68°C+ (Sola de sapato... brincadeira!)</li>
-            </ul>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Digite aqui..." onkeypress="handleEnter(event)">
+            <button onclick="enviarMensagem()">Enviar</button>
         </div>
     </div>
 
-    <script src="main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
